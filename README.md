@@ -4,6 +4,10 @@ Run `npm install` then `npm run start` at the root of the directory.
 
 To run tests run `npm run test`.
 
+The starting poin of the app is `index.ts` where a call to `initialCommand` is made. This is where the user types their initial input.
+
+The input is trimmed and validated to check if whether the input is a password or robot command.
+
 <br/>
 <br/>
 

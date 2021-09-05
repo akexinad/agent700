@@ -7,17 +7,25 @@ import { throwError } from "./utils/error";
 import {
     validateRobotPositioning,
     validateInput,
-    validPassword,
+    validatePassword,
     validateRobotOrientation
 } from "./validations";
 
-export const initialCmd = (data: RobotData): void => {
+/**
+ * This function will validate the input and check whether it's an 
+ * attampted password or command.
+ * 
+ * @param data The robot's orientation, position and checkpoint progress.
+ */
+export const initialCommand = (data: RobotData): void => {
     const input = rl.question("Move Robot \n> ").trim();
 
-    if (validPassword(input)) {
+    const password = validatePassword(input);
+    
+    if (password) {
         showPositionDetails(data);
 
-        return initialCmd(data);
+        return initialCommand(data);
     }
 
     const invalidCharacters = validateInput(input);
@@ -27,24 +35,26 @@ export const initialCmd = (data: RobotData): void => {
             "Robot only accepts initial command in the from of '0' or '1'"
         );
 
-        return initialCmd(data);
+        return initialCommand(data);
     }
 
     const commandList = createCommandList(input);
 
     moveRobot(data, commandList);
 
-    initialCmd(data);
+    initialCommand(data);
 };
 
+/**
+ * 
+ * @param data The robot's orientation, position and checkpoint progress.
+ * @param commandList A list of commands. Use createCommandList to make command array.
+ * @returns Updated data of the robots orientation, position and checkpoint progress.
+ */
 export const moveRobot = (data: RobotData, commandList: string[]): RobotData => {
     commandList.forEach((command) => {
         const { position, orientation } = data;
         const [x, y] = position;
-
-        if (command === "q") {
-            process.exit();
-        }
 
         if (command === "01") {
             const newCoords: [number, number] = [
@@ -63,6 +73,12 @@ export const moveRobot = (data: RobotData, commandList: string[]): RobotData => 
     return data;
 };
 
+/**
+ * When the user gives the password this function will return a kind of status
+ * report
+ * 
+ * @param data The robot's orientation, position and checkpoint progress.
+ */
 const showPositionDetails = (data: RobotData) => {
     const [destX, destY] = DESTINATION
     

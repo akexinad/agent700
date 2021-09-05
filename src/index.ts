@@ -1,4 +1,4 @@
-import { initialCmd } from "./commands";
+import { initialCommand as initialCommand } from "./commands";
 import { RobotData } from "./types";
 
 console.log(`AGENT 700`);
@@ -27,4 +27,4 @@ const robotData: RobotData = {
 };
 
 
-initialCmd(robotData);
+initialCommand(robotData);

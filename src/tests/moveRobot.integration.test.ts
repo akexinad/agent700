@@ -50,6 +50,10 @@ afterEach(() => {
 
 describe("the moveRobot command and integration", () => {
     it("should move the robot through all checkpoints and to the destination with no errors", () => {
+        /**
+         * This input will test to see if the robot goes through all 
+         * the checkpoints and reaches the destination with no errors.
+         */
         const commandList = createCommandList(
             "0 1 0 1 0 1 0 1 0 1 0 0 1 0 1 0 1 0 1 0 1 1 1 0 1 0 1 0 1 0 1 0 1 0 0 1 0 1 0 1 0 1 0 1 1 1 0 1 0 1 0 1 0 1 0 1 0 0 1 0 1 0 1 0 1 0 1 1 1 0 1 0 1 0 1 0 1 0 1 0 0 1 0 1 0 1 0 1 0 1"
         );

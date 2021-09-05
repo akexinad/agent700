@@ -2,6 +2,12 @@ import { RobotData } from "./types";
 import { DESTINATION, PASSWORD } from "./utils/constants";
 import { throwError } from "./utils/error";
 
+/**
+ * Validate the user's input
+ *
+ * @param input string input provided by the user.
+ * @returns Either an array of invalid characters passed into the initialCommand function or an empty list meaning the input is valid.
+ */
 export const validateInput = (input: string) => {
     const inputArray = input.split(" ");
 
@@ -22,12 +28,25 @@ export const validateInput = (input: string) => {
     return invalidChars;
 };
 
-export const validPassword = (input: string) => {
+export const validatePassword = (input: string) => {
     if (input === PASSWORD) return true;
 
     return false;
 };
 
+/**
+ *
+ * Checks if the robot is either:
+ * - Within the bounds.
+ * - Has passed a checkpoint.
+ * - Has passed all checkpoints before reaching the destination.
+ *
+ * @param data The robot's orientation, position and checkpoint progress.
+ * @param coordinates The coordinates to which the robot has asked to move.
+ * @returns Either updated data of the robots orientation, position and
+ * checkpoint progress, or it exits the process if the coordinates are invalid
+ * or if the robot has reached the destination before passing all checkpoints.
+ */
 export const validateRobotPositioning = (
     data: RobotData,
     coordinates: [number, number]
@@ -87,7 +106,16 @@ export const validateRobotPositioning = (
     return data;
 };
 
-export const validateRobotOrientation = (data: RobotData, command: string) => {
+/**
+ *
+ * @param data The robot's orientation, position and checkpoint progress.
+ * @param command Either a "1" or "0" which are the commands that re-orientate the robot.
+ * @returns Updated data of the robots orientation, position and checkpoint progress.
+ */
+export const validateRobotOrientation = (
+    data: RobotData,
+    command: "1" | "0"
+) => {
     const { orientation } = data;
 
     if (command === "0") {
